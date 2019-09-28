@@ -7,20 +7,21 @@
       <div class="content">
         <form>
           <div class="form-group">
-            <label class="label" for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="name" required />
+            <label class="label"  for="name">Name</label>
+            <input type="text" v-model="name" class="form-control" id="name" placeholder="name" required />
           </div>
           <div class="form-group">
-            <label class="label" for="email">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="email" required />
+            <label class="label"  for="email">Email address</label>
+            <input type="email" v-model="email" class="form-control" id="email" placeholder="email" required />
           </div>
           <div class="form-group">
-            <label class="label" for="password">Password</label>
+            <label class="label"  for="password">Password</label>
             <input
               type="password"
               class="form-control"
               id="password"
               placeholder="password"
+              v-model="password"
               required
             />
           </div>
