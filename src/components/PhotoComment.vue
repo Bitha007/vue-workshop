@@ -12,11 +12,14 @@
             </li>
           </ul>
           <div class="no-comments">
-            <p>No comments added yet</p>
+            <p v-if="!comments.length">No comments added yet</p>
+            <div v-for="comment in comments" :key="comment" >
+                <div>{{comment}}</div>
+            </div> 
           </div>
         </div>
         <div class="comment-box">
-          <textarea class="form-control" rows="3" placeholder="Write a comment"></textarea>
+          <textarea  @keypress.enter="addComment" class="form-control" v-model="currentComment" rows="3" placeholder="Write a comment"></textarea>
         </div>
       </div>
     </div>
@@ -25,7 +28,19 @@
 
 <script>
 export default {
-  name: "PhotoComment"
+  name: "PhotoComment",
+  data(){
+    return{
+      currentComment:"",
+      comments:[]
+    }
+  },
+  methods: {
+    addComment: function() {
+      this.comments = [...this.comments, this.currentComment];
+      this.currentComment =""
+    }
+  },
 };
 </script>
 
