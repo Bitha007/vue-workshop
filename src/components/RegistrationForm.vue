@@ -5,17 +5,31 @@
         <h4 class="title">Register to create a new account</h4>
       </div>
       <div class="content">
-        <form>
+        <form @submit.prevent="handleForm">
           <div class="form-group">
-            <label class="label"  for="name">Name</label>
-            <input type="text" v-model="name" class="form-control" id="name" placeholder="name" required />
+            <label class="label" for="name">Name</label>
+            <input
+              type="text"
+              v-model="name"
+              class="form-control"
+              id="name"
+              placeholder="name"
+              required
+            />
           </div>
           <div class="form-group">
-            <label class="label"  for="email">Email address</label>
-            <input type="email" v-model="email" class="form-control" id="email" placeholder="email" required />
+            <label class="label" for="email">Email address</label>
+            <input
+              type="email"
+              v-model="email"
+              class="form-control"
+              id="email"
+              placeholder="email"
+              required
+            />
           </div>
           <div class="form-group">
-            <label class="label"  for="password">Password</label>
+            <label class="label" for="password">Password</label>
             <input
               type="password"
               class="form-control"
@@ -25,8 +39,9 @@
               required
             />
           </div>
+          <div class="error" v-if="error">{{error}}</div>
 
-          <button @click.prevent="handleForm" type="submit" class="btn">Submit</button>
+          <button type="submit" class="btn">Submit</button>
         </form>
       </div>
     </div>
@@ -34,25 +49,45 @@
 </template>
 
 <script>
+import axios from "axios";
+import { async } from "q";
 export default {
   name: "RegistrationForm",
-  data(){
-    return{
-      name:"",
-      email:"",
-      password:""
-    }
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      error: ""
+    };
   },
   methods: {
-    handleForm: function(){
-      let data = {name: this.name, email:this.email, password: this.password }
-      console.log(data);
+    handleForm: async function() {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      };
+      try {
+        const url = "htps://jsonplaceholder.typicode.com/posts";
+        let res = await axios.post(url);
+        this.name = "";
+        this.email = "";
+        this.password = "";
+        this.error = "";
+      } catch (error) {
+        console.log(error);
+        this.error = error;
+      }
     }
-  },
+  }
 };
 </script>
 
 <style scoped lang="scss">
+.error {
+  color: red;
+}
 .container {
   margin: 0 auto;
   max-width: 520px;
