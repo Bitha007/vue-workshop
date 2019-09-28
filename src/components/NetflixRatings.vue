@@ -12,7 +12,6 @@
         <div class="search">
           <input
             v-model="keyword"
-            @change="changeData"
             type="text"
             class="form-control"
             placeholder="Search by title"
@@ -25,7 +24,7 @@
             <th>{{column}}</th>
           </thead>
           <tbody>
-            <tr v-for="ratingInfo in ratingsInfo" :key="ratingInfo.title">
+            <tr v-for="ratingInfo in filteredData" :key="ratingInfo.title">
               <td>{{ratingInfo.title}}</td>
               <td>{{ratingInfo.rating}}</td>
             </tr>
@@ -73,12 +72,13 @@ export default {
     },
     lowestRated: function() {
       this.ratingsInfo.sort((a, b) => (a.rating > b.rating ? -1 : 1));
-    },
-    changeData: function() {
-      this.ratingsInfo = this.ratingsInfo.filter(info => {
+    }
+  },
+  computed: {
+    filteredData: function() {
+      return this.ratingsInfo.filter(info => {
         let name = info.title.toLowerCase();
-        let b =  name.includes(this.keyword.toLowerCase());
-        return b;
+        return name.includes(this.keyword.toLowerCase());
       });
     }
   }
