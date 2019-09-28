@@ -5,16 +5,23 @@
         <h4 class="title">Increment or decrement a number</h4>
       </div>
       <div class="content">
-        <button type="button" class="btn">+</button>
-        <span class="counter"></span>
-        <button type="button" class="btn">-</button>
+        <button type="button" v-on:click="num++" class="btn">+</button>
+        <span class="counter" >{{num}}</span>
+        <button type="button" v-on:click="num--" class="btn">-</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name:"Counter",
+  data(){
+    return{
+      num:0
+    }
+  }
+};
 </script>
 
 
