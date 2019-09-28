@@ -26,7 +26,7 @@
             />
           </div>
 
-          <button type="submit" class="btn">Submit</button>
+          <button @click.prevent="handleForm" type="submit" class="btn">Submit</button>
         </form>
       </div>
     </div>
@@ -35,7 +35,20 @@
 
 <script>
 export default {
-  name: "RegistrationForm"
+  name: "RegistrationForm",
+  data(){
+    return{
+      name:"",
+      email:"",
+      password:""
+    }
+  },
+  methods: {
+    handleForm: function(){
+      let data = {name: this.name, email:this.email, password: this.password }
+      console.log(data);
+    }
+  },
 };
 </script>
 
