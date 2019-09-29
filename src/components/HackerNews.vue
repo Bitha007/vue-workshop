@@ -5,20 +5,20 @@
         <h4 class="title">Netflix Ratings</h4>
       </div>
       <div class="search">
-        <input type="text" class="form-control" placeholder="Search by title" />
+        <input v-model="keyword" type="text" class="form-control" placeholder="Search by title" />
       </div>
       <div class="content">
         <div>
-          <p>Loading news</p>
+          <p v-if="!news.length">Loading news</p>
         </div>
-        <div>
+        <div v-for="n in news" :key="n.objectID">
           <div>
             <p></p>
           </div>
           <ul class="list">
-            <li>
-              <a href></a>
-              <span>By:</span>
+            <li v-if="n.title && n.author">
+              <a :href="n.url">{{n.title}}</a>
+              <span>By: {{n.author}}</span>
             </li>
           </ul>
         </div>
@@ -28,8 +28,40 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "HackerNews"
+  name: "HackerNews",
+  data() {
+    return {
+      news: [],
+      keyword: "",
+      count: 0
+    };
+  },
+  async created() {
+    try {
+      let url = "http://hn.algolia.com/api/v1/search?query=" + this.keyword;
+      const res = await axios.get(url);
+      this.news = res.data.hits;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  watch: {
+    async keyword(value) {
+      this.news = [];
+      await setTimeout(console.log(this.count), 5000);
+      this.count++;
+      console.log(this.count);
+      try {
+        let url = "http://hn.algolia.com/api/v1/search?query=" + value;
+        const res = await axios.get(url);
+        this.news = res.data.hits;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 };
 </script>
 
